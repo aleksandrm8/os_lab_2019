@@ -1,0 +1,36 @@
+PREF_DIR=/projects/pref
+export LIBTOOLIZE=/projects/pref/bin/libtool
+export MAKEINFO=/projects/pref/bin/makeinfo
+export HELP2MAN=/projects/pref/bin/help2man
+export AUTOPOINT=/projects/pref/bin/autopoint
+export PATH=$PATH:/projects/pref/bin/
+mkdir $PREF_DIR \
+&& wget https://ftp.gnu.org/gnu/help2man/help2man-1.47.12.tar.xz \
+&& tar xf help2man-1.47.12.tar.xz \
+&& cd help2man-1.47.12 \
+&& ./configure --prefix=$PREF_DIR && make && make install \
+&& cd .. \
+&& wget https://ftp.gnu.org/gnu/texinfo/texinfo-6.7.tar.xz \
+&& tar xf texinfo-6.7.tar.xz \
+&& cd texinfo-6.7 \
+&& ./configure --prefix=$PREF_DIR && make && make install \
+&& cd .. \
+&& rm -rf texinfo-6.7.tar.xz texinfo-6.7 help2man-1.47.12 help2man-1.47.12.tar.xz \
+&& git clone git://git.savannah.gnu.org/libtool.git \
+&& cd libtool \
+&& ./bootstrap \
+&& ./configure --prefix=$PREF_DIR && make && make install \
+&& cd .. && rm -rf ./libtool \
+&& wget https://ftp.gnu.org/pub/gnu/gettext/gettext-0.20.1.tar.gz \
+&& tar xvf gettext-0.20.1.tar.gz \
+&& cd gettext-0.20.1 \
+&& ./configure --prefix=/projects/pref/ && make && make install \
+&& cd .. && rm -rf gettext-0.20.1 \
+&& git clone git://git.sv.gnu.org/m4 \
+&& cd m4 && git checkout branch-1.6 \
+&& ./bootstrap && ./configure --prefix=/projects/pref/ && make && make install \
+&& cd .. && rm -rf ./m4 \
+&& git clone git://git.sv.gnu.org/autoconf \
+&& cd autoconf && git checkout v2.65 \
+&& ./configure --prefix=/projects/pref/ && make && make install \
+
